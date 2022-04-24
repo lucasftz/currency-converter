@@ -14,7 +14,7 @@ function App() {
   const [to, setTo] = useState("PEN");
 
   useEffect(() => {
-    fetch("http://data.fixer.io/api/latest" + `?access_key=${API_KEY}`)
+    fetch(`http://data.fixer.io/api/latest?access_key=${API_KEY}`)
       .then((res) => res.json())
       .then((data) => setOutput(input * (data.rates[to] / data.rates[from])));
   }, [to, from, input]);

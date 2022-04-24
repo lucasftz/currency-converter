@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { API_KEY } from "./secrets";
 // icons
 import { FaArrowRight } from "react-icons/fa";
@@ -13,12 +13,11 @@ function App() {
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("PEN");
 
-  const convertInput = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     fetch("http://data.fixer.io/api/latest" + `?access_key=${API_KEY}`)
       .then((res) => res.json())
       .then((data) => setOutput(input * (data.rates[to] / data.rates[from])));
-  };
+  }, [to, from, input]);
 
   return (
     <div className="App">
@@ -30,14 +29,13 @@ function App() {
           <Selector value={to} setValue={setTo} />
         </div>
         {/* input form */}
-        <form onSubmit={convertInput}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
             className="border-[#2D2F3A] bg-transparent border-2 border-solid rounded-md p-2 text-lg"
             type="number"
             step="any"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onBlur={convertInput}
           />
         </form>
         {/* output */}

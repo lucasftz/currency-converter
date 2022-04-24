@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API_KEY } from "./secrets";
+import { currencyCodes } from "./constants";
 
 function App() {
   const [input, setInput] = useState(0);
@@ -20,7 +21,7 @@ function App() {
         {/* input form */}
         <form onSubmit={convertInput}>
           <input
-            className="border-[#2D2F3A] bg-transparent border-2 border-solid rounded-md p-2"
+            className="border-[#2D2F3A] bg-transparent border-2 border-solid rounded-md p-2 text-lg"
             type="number"
             step="any"
             value={input}
@@ -28,7 +29,10 @@ function App() {
             onBlur={convertInput}
           />
         </form>
-        <h1>{output.toFixed(2)}</h1>
+        <h1 className="text-lg mt-3">
+          <strong>{output.toFixed(2)}</strong>
+        </h1>
+        <h1 className="text-sm">{currencyCodes[to]}</h1>
       </div>
     </div>
   );

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { API_KEY } from "./secrets";
+// icons
+import { FaArrowRight } from "react-icons/fa";
+// constants
 import { currencyCodes } from "./constants";
+// components
+import Selector from "./components/Selector";
 
 function App() {
   const [input, setInput] = useState(0);
@@ -18,6 +23,12 @@ function App() {
   return (
     <div className="App">
       <div className="bg-[#1E2027] text-neutral-300 p-5">
+        {/* select input/output currencies */}
+        <div className="flex gap-1">
+          <Selector value={from} setValue={setFrom} />
+          <FaArrowRight className="self-center mb-2" />
+          <Selector value={to} setValue={setTo} />
+        </div>
         {/* input form */}
         <form onSubmit={convertInput}>
           <input
@@ -29,6 +40,7 @@ function App() {
             onBlur={convertInput}
           />
         </form>
+        {/* output */}
         <h1 className="text-lg mt-3">
           <strong>{output.toFixed(2)}</strong>
         </h1>

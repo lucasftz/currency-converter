@@ -30,7 +30,15 @@ function App() {
 
   // update the output every time the input changes
   useEffect(() => {
-    setOutput(input * (rates[to] / rates[from]));
+    try {
+      setOutput(input * (rates[to] / rates[from]));
+    } catch (err) {
+      if (err instanceof TypeError) {
+        setOutput("You have ran out of API calls!");
+      } else {
+        setOutput("Something went wrong...");
+      }
+    }
   }, [input, to, from, rates]);
 
   return (
@@ -53,10 +61,16 @@ function App() {
           />
         </form>
         {/* output */}
-        <p className="text-lg mt-3">
-          <strong>{output.toFixed(2)}</strong>
-        </p>
-        <p className="text-sm">{currencyCodes[to]}</p>
+        {output instanceof Number ? (
+          <div>
+            <p className="text-lg mt-3">
+              <strong>{output.toFixed(2)}</strong>
+            </p>
+            <p className="text-sm">{currencyCodes[to]}</p>
+          </div>
+        ) : (
+          <p className="text-lg mt-3">{output}</p>
+        )}
       </div>
     </div>
   );

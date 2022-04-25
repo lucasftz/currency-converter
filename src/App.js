@@ -12,12 +12,26 @@ function App() {
   const [output, setOutput] = useState(0);
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("PEN");
+  const [rates, setRates] = useState({});
 
-  useEffect(() => {
+  const fetchRates = () => {
     fetch(`http://data.fixer.io/api/latest?access_key=${API_KEY}`)
       .then((res) => res.json())
-      .then((data) => setOutput(input * (data.rates[to] / data.rates[from])));
-  }, [to, from, input]);
+      .then((data) => setRates(data.rates));
+  };
+
+  // fetch data on initial render
+  fetchRates();
+
+  // only re-fetch the data when changing currencies to save on API calls
+  useEffect(() => {
+    fetchRates();
+  }, [to, from]);
+
+  // update the output every time the input changes
+  useEffect(() => {
+    setOutput(input * (rates[to] / rates[from]));
+  }, [input, to, from, rates]);
 
   return (
     <div className="App">

@@ -39,10 +39,10 @@ function App() {
           />
         </form>
         {/* output */}
-        <h1 className="text-lg mt-3">
+        <p className="text-lg mt-3">
           <strong>{output.toFixed(2)}</strong>
-        </h1>
-        <h1 className="text-sm">{currencyCodes[to]}</h1>
+        </p>
+        <p className="text-sm">{currencyCodes[to]}</p>
       </div>
     </div>
   );

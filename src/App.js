@@ -13,6 +13,7 @@ function App() {
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("PEN");
   const [rates, setRates] = useState({});
+  const [isAPICalls, setIsAPICalls] = useState(true);
 
   const fetchRates = () => {
     fetch(`http://data.fixer.io/api/latest?access_key=${API_KEY}`)
@@ -32,11 +33,10 @@ function App() {
   useEffect(() => {
     try {
       setOutput(input * (rates[to] / rates[from]));
+      console.log(output, typeof output);
     } catch (err) {
       if (err instanceof TypeError) {
-        setOutput("You have ran out of API calls!");
-      } else {
-        setOutput("Something went wrong...");
+        setIsAPICalls(false);
       }
     }
   }, [input, to, from, rates]);
@@ -61,16 +61,22 @@ function App() {
           />
         </form>
         {/* output */}
-        {output instanceof Number ? (
-          <div>
-            <p className="text-lg mt-3">
-              <strong>{output.toFixed(2)}</strong>
-            </p>
-            <p className="text-sm">{currencyCodes[to]}</p>
-          </div>
-        ) : (
-          <p className="text-lg mt-3">{output}</p>
-        )}
+        <div>
+          {isAPICalls ? (
+            <>
+              <p className="text-lg mt-3">
+                <strong>{output.toFixed(2)}</strong>
+              </p>
+              <p className="text-sm">{currencyCodes[to]}</p>
+            </>
+          ) : (
+            <>
+              <p className="text-lg mt-3">
+                <strong>You are out of API calls!</strong>
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

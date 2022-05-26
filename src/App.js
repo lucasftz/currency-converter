@@ -21,9 +21,6 @@ function App() {
       .then((data) => setRates(data.rates));
   };
 
-  // fetch data on initial render
-  fetchRates();
-
   // only re-fetch the data when changing currencies to save on API calls
   useEffect(() => {
     fetchRates();

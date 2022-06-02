@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "description": "Look up how much a certain currency is worth",
-  "icons": [
-      {"512": "logo512.png"}
-  ],
   "action": {
-      "default_icon": "logo512.png",
-      "default_popup": "popup.html"
+    "default_icon": "logo512.png",
+    "default_popup": "popup.html"
   }
 }
